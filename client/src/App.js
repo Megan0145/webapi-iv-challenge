@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import User from './components/User';
+import { StyledApp } from './styles';
+import Navbar from './components/Navbar';
 
 function App() {
   const [ users, setUsers ] = useState(null);
   useEffect(() => {
-    axios.get('/api/users')
+    axios.get('http://localhost:4000/api/users')
     .then(res => {
+      console.log(res.data)
       setUsers(res.data)
     })
     .catch(err => {
@@ -18,15 +22,16 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <StyledApp>
+      <Navbar />
         <div>
           {users.map(user => {
             return (
-              <div key={user.id}>{user.name}</div>
+              <User key={user.id} name={user.name}/>
             )
           })}
         </div>
-    </div>
+    </StyledApp>
   );
 }
 
