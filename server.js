@@ -1,15 +1,18 @@
 const express = require('express');
+const cors = require('cors');
 const userRouter = require('./users/userRouter');
 const postRouter = require('./posts/postRouter');
 const server = express();
 
+server.use(express.static(__dirname + '/client/build'))
 server.use(express.json());
-server.use(logger)
+server.use(logger);
+server.use(cors());
 server.use('/api/users', userRouter);
 server.use('/api/posts', postRouter);
 
 server.get('/', (req, res) => {
-  res.send(`<h2>Let's write some middleware!</h2>`)
+  res.sendFile(__dirname + '/client/build/index.html')
 });
 
 //custom middleware
